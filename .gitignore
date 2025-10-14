@@ -1,0 +1,44 @@
+# Data directories
+data/input/*
+data/output/*
+data/logs/*
+
+# Keep directory structure
+!data/input/.gitkeep
+!data/output/.gitkeep
+!data/logs/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+temp/

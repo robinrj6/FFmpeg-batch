@@ -1,0 +1,118 @@
+# Video Processing Profiles
+# Define common processing workflows as reusable profiles
+
+profiles:
+  # Web optimized video for streaming
+  web_optimized:
+    operation: transcode
+    description: "Optimized for web streaming (H.264, medium preset, CRF 23)"
+    parameters:
+      codec: libx264
+      preset: medium
+      crf: 23
+      audio_codec: aac
+
+  # High quality archival
+  high_quality:
+    operation: transcode
+    description: "High quality preservation (H.264, slow preset, CRF 18)"
+    parameters:
+      codec: libx264
+      preset: slow
+      crf: 18
+      audio_codec: aac
+
+  # Social media ready
+  social_media:
+    operation: compress
+    description: "Compressed for social media (720p, target 50MB)"
+    parameters:
+      scale: "1280:720"
+      target_size_mb: 50
+
+  # Mobile optimized
+  mobile_optimized:
+    operation: compress
+    description: "Optimized for mobile devices (480p, target 25MB)"
+    parameters:
+      scale: "854:480"
+      target_size_mb: 25
+
+  # Thumbnail generation
+  thumbnail:
+    operation: generate_thumbnail
+    description: "Generate thumbnail at 1 second mark"
+    parameters:
+      timestamp: "00:00:01"
+      size: "1280x720"
+
+  # Audio extraction MP3
+  audio_mp3:
+    operation: extract_audio
+    description: "Extract audio as MP3 (192kbps)"
+    parameters:
+      audio_format: mp3
+      bitrate: 192k
+
+  # Audio extraction AAC
+  audio_aac:
+    operation: extract_audio
+    description: "Extract audio as AAC (256kbps)"
+    parameters:
+      audio_format: aac
+      bitrate: 256k
+
+  # Preview GIF
+  preview_gif:
+    operation: create_gif
+    description: "Create 5-second preview GIF from start"
+    parameters:
+      start_time: "00:00:00"
+      duration: 5
+      fps: 10
+      scale: 480
+
+  # 4K to 1080p
+  downscale_1080p:
+    operation: transcode
+    description: "Downscale to 1080p with quality preservation"
+    parameters:
+      codec: libx264
+      preset: medium
+      crf: 20
+      audio_codec: aac
+
+  # Quick trim (first 30 seconds)
+  trim_30s:
+    operation: trim_video
+    description: "Trim to first 30 seconds"
+    parameters:
+      start_time: "00:00:00"
+      duration: 30
+
+# Batch processing workflows
+workflows:
+  # Complete social media package
+  social_media_package:
+    description: "Generate video, thumbnail, and preview GIF for social media"
+    jobs:
+      - profile: social_media
+      - profile: thumbnail
+      - profile: preview_gif
+
+  # Content archival
+  archive_package:
+    description: "High quality video with extracted audio and thumbnail"
+    jobs:
+      - profile: high_quality
+      - profile: audio_mp3
+      - profile: thumbnail
+
+  # Multi-format delivery
+  multi_format:
+    description: "Generate web, mobile, and audio versions"
+    jobs:
+      - profile: web_optimized
+      - profile: mobile_optimized
+      - profile: audio_aac
+      - profile: thumbnail

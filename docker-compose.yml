@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  video-processor:
+    build: .
+    container_name: ffmpeg-batch-processor
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/input:/data/input
+      - ./data/output:/data/output
+      - ./data/logs:/data/logs
+      - ./config:/app/config
+    environment:
+      - PYTHONUNBUFFERED=1
+      - MAX_WORKERS=4
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    restart: unless-stopped
