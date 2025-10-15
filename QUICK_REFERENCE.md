@@ -6,6 +6,9 @@
 # Quick start (builds and starts everything)
 ./quickstart.sh
 
+# docker build
+docker-compose build
+
 # Manual start
 docker-compose up -d
 
