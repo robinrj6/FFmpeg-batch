@@ -38,10 +38,11 @@ docker-compose up -d
 3. **Process videos** using the CLI:
 ```bash
 # Using a profile
-docker-compose exec video-processor python cli.py profile /data/input/video.mp4 web_optimized
+docker-compose exec video-processor python cli.py profile /data/input/video.mp4 web_optimized --output /data/output/video.mp4
 
 # Using a workflow
-docker-compose exec video-processor python cli.py workflow /data/input/video.mp4 social_media_package
+docker-compose exec video-processor python cli.py workflow /data/input/video.mp4 social_media_package --output /data/output/video.mp4
+
 
 # Check status
 docker-compose exec video-processor python cli.py stats
